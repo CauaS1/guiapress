@@ -1,0 +1,63 @@
+<%- include("../partials/header.ejs") %>
+
+<body>
+  <%- include("../partials/navbar.ejs") %>
+
+  <div class="container">
+    <br>
+    <form method="POST" action="/comments/savecomment">
+      <span>Name</span>
+      <input type="text" placeholder="Add your name" name="name" class="form-control">
+      <br>
+      <span>Comment</span>
+      <input type="text" placeholder="Add your comment" name="comment" class="form-control">
+      <br>
+      <button class="btn btn-danger">Add comment</button>
+    </form>
+
+    <br><br>
+    <% comments.forEach(comm => { %>
+    <div class="card">
+      <div class="card-header" style="display: flex; justify-content: space-between;">
+        <h5> <%= comm.name %> </h5>
+
+        <a href="/comments/edit/<%= comm.id %>" class="btn btn-outline-dark"
+          style="display: flex; align-items: center; justify-content: center;">
+          <img src="/icon/pencil.svg" alt="Pen icon" style="width: 1rem; height: 1rem;">
+        </a>
+        
+        <form action="/comments/delete" method="POST" onsubmit="deleteComment(event, this)">
+          <input type="hidden" name="id" value="<%= comm.id %>">
+          <button class="btn btn-outline-danger" style="display: flex; align-items: center; justify-content: center;">
+            <img src="/icon/trash.svg" alt="Trash icon" style="width: 1rem; height: 1rem;">
+          </button>
+        </form>
+      </div>
+      <div class="card-body">
+        <p> <%= comm.text %> </p>
+      </div>
+    </div>
+    <br>
+    <% }) %>
+  </div>
+
+  <style>
+    /* form {
+      display: flex;
+    }
+    form button {
+      margin-right: .5rem;
+    } */
+  </style>
+
+  <script>
+    function deleteComment(event, form) { //It don't need be named "form"
+      event.preventDefault();
+      const decision = confirm("Você quer deletar seu comentario?");
+      if (decision) {
+        form.submit();
+      }
+    }
+  </script>
+</body>
+<%- include("../partials/footer.ejs") %>

@@ -1,0 +1,18 @@
+<div class="navbar navbar-dark bg-danger navbar-expand-lg">
+  <!--THIS LAST IS TO HAVE A "FLEX-DIRECTION: ROW" IN THE NAV-->
+  <a class="navbar-brand" href="/">
+    GuiaPress
+  </a>
+
+  <ul class="navbar-nav mr-auto" style="flex-direction: row;">
+    <li class="nav-item">
+      <a href="/" class="nav-link">Home</a>
+    </li>
+
+    <% categories.forEach(category => { %>
+    <li class="nav-item">
+      <a href="/category/<%= category.slug %>" class="nav-link"> <%= category.title %> </a>
+    </li>
+    <% }) %>
+  </ul>
+</div>

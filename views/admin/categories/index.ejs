@@ -1,0 +1,53 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs")%>
+
+<div class="container">
+  <hr>
+  <h2>Categorias</h2>
+  <a href="/admin/categories/new" class="btn btn-success">Criar nova categoria</a>
+  <hr>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <!-- LINE  -->
+        <th>ID</th> <!-- COLUMNS -->
+        <th>Título</th>
+        <th>Slug</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% categories.forEach(category => { %>
+      <tr>
+        <th> <%= category.id %> </th>
+        <th> <%= category.title %> </th>
+        <th> <%= category.slug %> </th>
+        <th>
+          <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-outline-dark">Editar</a>
+
+          <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+            <!-- THIS se refere ao evento que esta chamando esse evento, no caso o FORM  -->
+            <input type="hidden" name="id" value="<%= category.id %>">
+            <button class="btn btn-outline-danger">Deletar</button>
+          </form>
+        </th>
+      </tr>
+      <% }) %>
+
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function confirmarDelecao(event, form) {
+    event.preventDefault(); //impede que o formulario seja subemetido
+    const decision = confirm("Você quer deletar esta categoria?");
+    if(decision) {
+      form.submit();
+    }
+  }
+</script>
+
+<%- include("../../partials/footer.ejs") %>
